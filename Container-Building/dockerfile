@@ -29,8 +29,6 @@ RUN pip install --upgrade pip
 # Install Python dependencies
 RUN pip install -r requirements.txt
 
-------------------------------------
-Continue work here
 
 # Copy the rest of your application (if you have one)
 COPY . .
@@ -38,6 +36,13 @@ COPY . .
 # Example: expose FastAPI port
 EXPOSE 8000
 
+
 # Example: run FastAPI app (if main.py contains FastAPI app)
 # Replace this CMD with your app’s entrypoint if different
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+#CMD ["sh", "-c", "echo $API_KEY > .env"]
+
+#CMD ["python3", "-m", "uvicorn", "app1:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+CMD ["sh", "-c", "echo OPENAI_API_KEY=$API_KEY > .env && python3 -m uvicorn app1:app --host 0.0.0.0 --port 8000 --reload"]
+
+
