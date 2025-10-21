@@ -1,3 +1,4 @@
 # Creating the Grafana-LLM Container Image
 
-- Will be included in the next Milestone. 
+- We are working on containerizing the project in the next milestone. 
+
