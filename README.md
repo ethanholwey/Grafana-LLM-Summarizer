@@ -1,10 +1,11 @@
 # Grafana LLM Summarizer
+### Note: This Documentation page is subject to change as we continue to develop our project and all features described on this page may not have full functionality until our project is complete. 
 
 This project utilizes integrates OpenAI's API as well as FastAPI to integrate LLM-summarization into the free-use version of Grafana. 
 
 The final deliverable of this project is a Docker container image that can be deployed on various types on-premises servers, or cloud computing platforms. 
 
-### Note: This Documentation page is subject to change as we continue to develop our project and all features described on this page may not have full functionality until our project is complete. 
+
 
 ## Deploying the Docker container: 
 
