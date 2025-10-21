@@ -1,5 +1,5 @@
 # Grafana LLM Summarizer
-### Note: This Documentation page is subject to change as we continue to develop our project and all features described on this page may not have full functionality until our project is complete. 
+### Note: Any documentation and this repo is subject to change as we continue to develop our project and all features described on this page may not have full functionality until our project is complete. 
 
 This project utilizes integrates OpenAI's API as well as FastAPI to integrate LLM-summarization into the free-use version of Grafana. 
 
