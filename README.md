@@ -11,11 +11,24 @@ The final deliverable of this project is a Docker container image that can be de
 
 A Docker container image is packaged with a Python environment, necessary OpenAI libraries, and our script that builds the API with FastAPI and UviCorn. 
 
-An environment variable `API_KEY` has been defined in our Docker container image. The following command can be executed to deploy the docker container provided the image is present: 
+An environment variable `API_KEY` has been defined in our Docker container image. An example `docker-compose` file can be found below:
 
 ```
-docker run -d -e API_KEY=OPENAI_API_KEY_HERE -p 8000:8000 ai-agent --restart unless-stopped
+services:
+  grafana-llm:
+    image: grafana-llm
+    container_name: grafana-llm
+    restart: unless-stopped
+    environment:
+      - API_KEY=INSERT_API_KEY_HERE
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./logs:/app/logs/
+
 ```
+
+Within the local `logs` directory that this container is deployed in, the LLM will summarize any log files present within this folder. 
 
 This command deploys the API agent in the background on port 8000. 
 

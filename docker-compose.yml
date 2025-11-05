@@ -1,0 +1,11 @@
+services:
+  grafana-llm:
+    image: grafana-llm
+    container_name: grafana-llm
+    restart: unless-stopped
+    environment:
+      - API_KEY=INSERT_API_KEY_HERE
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./logs:/app/logs/

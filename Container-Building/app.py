@@ -1,11 +1,28 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Query
 from dotenv import load_dotenv
 import os
 from openai import OpenAI
 from collections import Counter
 import re
 
+# Directory where logs will be mounted (configurable for Docker volume mounting)
+LOG_DIR = os.getenv("LOG_DIR", "./logs")
+# Default log file to process
+LOG_FILE = os.getenv("LOG_FILE", "firstLog.txt")
+
 app = FastAPI()
+
+def get_log_file_path(filename=None):
+    """Get the full path to a log file. Uses LOG_DIR for Docker volume mounting."""
+    if filename is None:
+        filename = LOG_FILE
+    # Security: only use basename to prevent directory traversal
+    filename = os.path.basename(filename)
+    path = os.path.join(LOG_DIR, filename)
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Log file not found: {path}")
+    return path
+
 
 @app.get("/")
 def root():
@@ -19,13 +36,14 @@ def root():
         name="File DB",
     )
 
-    # Debug print file contents
-    with open("test.txt", "r", encoding="utf-8") as f:
+    # Read the log file (supports Docker volume mounting via LOG_DIR)
+    path = get_log_file_path()
+    with open(path, "r", encoding="utf-8") as f:
         contents = f.read()
         print("DEBUG: File contents:\n", contents)
 
     # Upload file to vector store
-    with open("test.txt", "rb") as f:
+    with open(path, "rb") as f:
         client.beta.vector_stores.files.upload_and_poll(
             vector_store_id=vector_store.id,
             file=f
@@ -65,10 +83,13 @@ def root():
 
     return {msg.role: LLM_response}
 
-@app.get("/count")
-def keyword_count():
 
-    with open("test.txt", "r", encoding="utf-8") as f:
+@app.get("/count")
+def keyword_count(filename=None):
+    # Support selecting different log files (useful for Docker volume mounting)
+    path = get_log_file_path(filename)
+
+    with open(path, "r", encoding="utf-8") as f:
         contents = f.read()
 
     keywords = ["good", "critical", "failed","warning"]
@@ -83,7 +104,18 @@ def keyword_count():
 
 
 @app.get("/file")
-def read_file():
-    with open("test.txt", "r", encoding="utf-8") as f:
+def read_file(filename=None):
+    # Support selecting different log files (useful for Docker volume mounting)
+    path = get_log_file_path(filename)
+
+    with open(path, "r", encoding="utf-8") as f:
         contents = f.read()
     return contents
+
+
+@app.get("/files")
+def list_files():
+    """List available log files in LOG_DIR (useful when mounting log directories)"""
+    if not os.path.isdir(LOG_DIR):
+        raise HTTPException(status_code=404, detail=f"Log directory not found: {LOG_DIR}")
+    return sorted(os.listdir(LOG_DIR))
