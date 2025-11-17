@@ -1,6 +1,6 @@
 services:
   grafana-llm:
-    image: grafana-llm
+    image: grafana-llm:latest
     container_name: grafana-llm
     restart: unless-stopped
     environment:

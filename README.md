@@ -7,9 +7,8 @@ The final deliverable of this project is a Docker container image that can be de
 
 
 
-## Deploying the Docker container: 
+## Docker Compose Deployment: 
 
-### Latest Image Version: 0.0.2
 
 A Docker container image is packaged with a Python environment, necessary OpenAI libraries, and our script that builds the API with FastAPI and UviCorn. 
 
@@ -18,7 +17,7 @@ An environment variable `API_KEY` has been defined in our Docker container image
 ```
 services:
   grafana-llm:
-    image: grafana-llm:VERSION_HERE
+    image: grafana-llm:latest
     container_name: grafana-llm
     restart: unless-stopped
     environment:
