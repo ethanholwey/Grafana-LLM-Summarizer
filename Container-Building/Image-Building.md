@@ -8,7 +8,7 @@ We based the container off of the default Python 3 docker container. We include 
 
 # Building the image 
 
-```docker build --no-cache -t grafana-llm .```
+```docker build --no-cache -t grafana-llm:latest -t grafana-llm .```
 
 This command builds the image using the instructions in the `dockerfile`. 
 

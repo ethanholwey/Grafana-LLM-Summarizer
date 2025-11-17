@@ -10,6 +10,7 @@ WORKDIR /app
 
 # Copy dependency list
 COPY requirements.txt .
+COPY app.py .
 
 # Install system dependencies for some Python packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -30,8 +31,6 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 
-# Copy the rest of your application (if you have one)
-COPY . .
 
 # Example: expose FastAPI port
 EXPOSE 8000
