@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build and push docker image to dockerhub 
 on:
   [workflow_dispatch]
   
@@ -8,5 +8,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build ./Container-Building -t grafana-llm-summarizer:latest
+    - name: Build the Docker Image
+      run: docker build ./Container-Building -t ethanholwey/grafana-llm:latest
+    - name: Push Image to Docker Hub 
+      run: |
+        docker login -u ethanholwey -p ${{ secrets.DOCKER_HUB_TOKEN}}
+        docker push ethanholwey/grafana-llm:latest
