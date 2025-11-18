@@ -1,0 +1,65 @@
+---
+- name: Deploy grafana-llm locally
+  hosts: localhost
+  connection: local
+  become: true
+
+  vars_prompt:
+    - name: api_key
+      prompt: "Enter API_KEY for grafana-llm"
+      private: yes
+
+  vars:
+    app_dir: ./grafana-llm
+
+  tasks:
+    - name: Check if docker is already installed
+      ansible.builtin.command: docker --version
+      register: docker_check
+      ignore_errors: true
+      changed_when: false
+
+    - name: Install Docker and docker compose plugin if not installed
+      ansible.builtin.apt:
+        name:
+          - docker.io
+          - docker-compose-plugin
+        state: present
+        update_cache: yes
+      when: docker_check.failed
+
+    - name: Ensure Docker service is running
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Create local app directory
+      ansible.builtin.file:
+        path: "{{ app_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Create local logs directory (for ./logs volume)
+      ansible.builtin.file:
+        path: "{{ app_dir }}/logs"
+        state: directory
+        mode: "0755"
+
+    - name: Copy docker-compose.yml from current folder to app folder
+      ansible.builtin.copy:
+        src: docker-compose.yml
+        dest: "{{ app_dir }}/docker-compose.yml"
+        mode: "0644"
+
+    - name: Inject API_KEY into docker-compose.yml
+      ansible.builtin.replace:
+        path: "{{ app_dir }}/docker-compose.yml"
+        regexp: 'API_KEY=.*'
+        replace: 'API_KEY={{ api_key }}'
+      no_log: true   # hides your key from Ansible logs
+
+    - name: Bring up grafana-llm stack locally
+      ansible.builtin.command: docker compose up -d
+      args:
+        chdir: "{{ app_dir }}"
