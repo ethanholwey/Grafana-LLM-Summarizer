@@ -1,6 +1,8 @@
 name: Build and push docker image to dockerhub 
 on:
-  [workflow_dispatch]
+  push:
+    branches:
+     - main
   
 jobs:
   publish_images:
