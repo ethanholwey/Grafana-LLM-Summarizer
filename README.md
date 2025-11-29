@@ -58,7 +58,10 @@ Our Root endpoint hosts the LLM's summary. Once you access this enpoint, the LLM
 ### Endpoint 2 - /file 
 The file endpoint hosts the entire file that the LLM is using to summarize. The file's content is displayed in JSON format on the webpage
 ### Endpoint 3 - /count
-The count endpoint hosts key value pairs for defined keywords that are important in logs. The purpose of this endpoint is to read the file and count how many times a keyword appears in the log. For example: ### Good: 3, Critical: 0, Failed: 42
+The count endpoint hosts key value pairs for defined keywords that are important in logs. The purpose of this endpoint is to read the file and count how many times a keyword appears in the log. We have a few keywords defined and the webpage displays key value pairs in the following format:
+Good: 2,
+Failed: 0
+Critical: 34
 
 
 
