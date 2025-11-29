@@ -50,4 +50,17 @@ A dashboard was setup in Grafana by taking the following steps:
 1. Repeat steps 1-2 above, change the URL to have the `/count` endpoint (i.e, 127.0.0.1:8000/count)
 2. Change the visualization to a pie chart. 
 
+## Endpoints
+We created three different endpoints that are key compontnets to our application. They are all accessed via the IP address of our EC2 Instance (i.e, 127.0.0.1:8000/<Endpoint name>
+### Endpoint 1 - / (root)
+Our Root endpoint hosts the LLM's summary. Once you access this enpoint, the LLM will start reading the file and generating a summary. The summary is then displayed in JSON format on the webpage. 
+
+### Endpoint 2 - /file 
+The file endpoint hosts the entire file that the LLM is using to summarize. The file's content is displayed in JSON format on the webpage
+### Endpoint 3 - /count
+The count endpoint hosts key value pairs for defined keywords that are important in logs. The purpose of this endpoint is to read the file and count how many times a keyword appears in the log. For example:
+#### Good: 3, Critical: 0, Failed: 42
+
+
+
 
