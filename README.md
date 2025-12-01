@@ -1,5 +1,4 @@
 # Grafana LLM Summarizer
-### Note: Any documentation and this repo is subject to change as we continue to develop our project and all features described on this page may not have full functionality until our project is complete. 
 
 This project utilizes integrates OpenAI's API as well as FastAPI to integrate LLM-summarization into the free-use version of Grafana. 
 
@@ -8,36 +7,27 @@ The final deliverable of this project is a Docker container image that can be de
 
 ## Ansible Deployment
 
-The Ansible playbook is intended to be placed in the same directory as the Docker Compose. The server runs the playbook from on the local EC2 instance. 
+The Ansible playbook contained within this repository under `Ansible-Deployment\playbook.yml` is designed to: 
+1. Install Docker, Python, any necessary dependencies. 
+2. Deploy the Docker-Compose stack required for Grafana-LLM.
+3. Deploy Grafana 
 
-The Ansible playbook instructions include a check for installation of Docker and Docker Compose. Once Docker Compose is installed, it deploys the docker-compose file within the same directory that the Ansible playbook is contained in within the EC2 server. 
+An example of deploying Grafana-LLM on a Debian-based Linux Amazon E2 VM is below: 
+1. Install Ansible with `sudo apt install ansible -y`
+2. Create a folder in the home directory titled `"ansible"`. Include both the `docker-compose.yml` file and `playbook.yml` file from `Ansible-Deployment\playbook.yml` in this folder. 
+4. Run the following command: 
+```ansible-playbook playbook.yml```
+5. When prompted, enter the OpenAI API Key
 
-## Deployment with Ansible 
-1. Ensure the docker-compose file within this repository is in the same folder as the Ansible deployment file.
-2. Run the following command `ansible-playbook deploy.yml`
+## Standalone Docker Compose Deployment: 
 
+If you would like to manually deploy the Grafana-LLM image via Docker-Compose (without Ansible), drag the `docker-compose.yml` file to a folder and run the following command: 
+```docker-compose.yml up -d```
 
-## Docker Compose Deployment: 
-
-
-A Docker container image is packaged with a Python environment, necessary OpenAI libraries, and our script that builds the API with FastAPI and UviCorn. 
+The Docker container image is packaged with a Python environment, necessary OpenAI libraries, and our script that builds the API with FastAPI and UviCorn. 
 
 An environment variable `API_KEY` has been defined in our Docker container image. An example `docker-compose` file can be found below:
 
-```
-services:
-  grafana-llm:
-    image: grafana-llm:latest
-    container_name: grafana-llm
-    restart: unless-stopped
-    environment:
-      - API_KEY=INSERT_API_KEY_HERE
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./logs:/app/logs/
-
-```
 
 Within the local `logs` directory that this container is deployed in, the LLM will summarize any log files present within this folder. 
 
