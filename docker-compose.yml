@@ -1,6 +1,6 @@
 services:
   grafana-llm:
-    image: grafana-llm:latest
+    image: ethanholwey/grafana-llm:latest
     container_name: grafana-llm
     restart: unless-stopped
     environment:
@@ -9,3 +9,18 @@ services:
       - "8000:8000"
     volumes:
       - ./logs:/app/logs/
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    # if you are running as root then set it to 0
+    # else find the right id with the id -u command
+    user: '0'
+    ports:
+      - '3000:3000'
+    # adding the mount volume point which we create earlier
+    volumes:
+      - './grafana-data:/var/lib/grafana'
+    environment:
+      - GF_DATABASE_TYPE=sqlite3
+

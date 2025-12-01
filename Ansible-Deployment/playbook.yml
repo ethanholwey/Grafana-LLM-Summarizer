@@ -46,6 +46,12 @@
         state: directory
         mode: "0755"
 
+    - name: Create log.txt with initial text
+      ansible.builtin.copy:
+        dest: "{{ app_dir }}/logs/log.txt"
+        content: "Summarize this file\n"
+        mode: "0644"        
+
     - name: Move docker-compose.yml from current folder to app folder
       ansible.builtin.command: mv -f docker-compose.yml "{{ app_dir }}/docker-compose.yml"
 
@@ -63,10 +69,10 @@
       no_log: true   # hides your key from Ansible logs
 
     - name: Bring up grafana-llm stack locally
-      ansible.builtin.command: docker compose up -d
+      ansible.builtin.command: docker-compose up -d
       args:
         chdir: "{{ app_dir }}"
 
     - name: Notify user of successful deployment
       ansible.builtin.debug:
-        msg: "Grafana-LLM has been deployed successfully, summarize a log file in the log.txt file"
+        msg: "Grafana-LLM has been deployed successfully, add text to the log file in grafana-llm/logs/log.txt to test."
