@@ -46,11 +46,14 @@
         state: directory
         mode: "0755"
 
-    - name: Copy docker-compose.yml from current folder to app folder
-      ansible.builtin.copy:
-        src: docker-compose.yml
-        dest: "{{ app_dir }}/docker-compose.yml"
+    - name: Move docker-compose.yml from current folder to app folder
+      ansible.builtin.command: mv -f docker-compose.yml "{{ app_dir }}/docker-compose.yml"
+
+    - name: Ensure correct permissions on moved docker-compose.yml
+      ansible.builtin.file:
+        path: "{{ app_dir }}/docker-compose.yml"
         mode: "0644"
+        state: file
 
     - name: Inject API_KEY into docker-compose.yml
       ansible.builtin.replace:
@@ -63,3 +66,7 @@
       ansible.builtin.command: docker compose up -d
       args:
         chdir: "{{ app_dir }}"
+
+    - name: Notify user of successful deployment
+      ansible.builtin.debug:
+        msg: "Grafana-LLM has been deployed successfully, summarize a log file in the log.txt file"

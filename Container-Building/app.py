@@ -8,7 +8,7 @@ import re
 # Directory where logs will be mounted (configurable for Docker volume mounting)
 LOG_DIR = os.getenv("LOG_DIR", "./logs")
 # Default log file to process
-LOG_FILE = os.getenv("LOG_FILE", "firstLog.txt")
+LOG_FILE = os.getenv("LOG_FILE", "log.txt")
 
 app = FastAPI()
 

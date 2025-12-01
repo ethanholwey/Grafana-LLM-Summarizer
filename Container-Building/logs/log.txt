@@ -1,0 +1,8 @@
+Summarize this log
+
+2025-11-29T00:20:49.692450+00:00 ip-172-31-38-223 systemd-networkd[486]: br-4e16ffee7177: Link UP
+2025-11-29T00:20:49.710218+00:00 ip-172-31-38-223 networkd-dispatcher[538]: WARNING:Unknown index 4 seen, reloading int>2025-11-29T00:20:49.732719+00:00 ip-172-31-38-223 systemd[1]: networkd-dispatcher.service: Got notification message fro>2025-11-29T00:20:49.769668+00:00 ip-172-31-38-223 systemd[1]: networkd-dispatcher.service: Got notification message fro>2025-11-29T00:20:49.793030+00:00 ip-172-31-38-223 systemd-networkd[486]: br-588c4161cd16: Link UP
+2025-11-29T00:20:49.825434+00:00 ip-172-31-38-223 networkd-dispatcher[538]: WARNING:Unknown index 5 seen, reloading int>2025-11-29T00:20:49.829375+00:00 ip-172-31-38-223 systemd[1]: networkd-dispatcher.service: Got notification message fro>2025-11-29T00:20:49.845528+00:00 ip-172-31-38-223 systemd[1]: networkd-dispatcher.service: Got notification message fro>2025-11-29T00:20:49.920007+00:00 ip-172-31-38-223 systemd-networkd[486]: docker0: Link UP
+2025-11-29T00:20:50.017004+00:00 ip-172-31-38-223 snapd[543]: overlord.go:288: Acquiring state lock file
+2025-11-29T00:20:50.017237+00:00 ip-172-31-38-223 snapd[543]: overlord.go:293: Acquired state lock file
+2025-11-29T00:20:50.039067+00:00 ip-172-31-38-223 amazon-ssm-agent.amazon-ssm-agent[541]: Error occurred fetching the s>2025-11-29T00:20:50.039253+00:00 ip-172-31-38-223 amazon-ssm-agent.amazon-ssm-agent[541]: Initializing new seelog logger2025-11-29T00:20:50.039365+00:00 ip-172-31-38-223 amazon-ssm-agent.amazon-ssm-agent[541]: New Seelog Logger Creation Co
