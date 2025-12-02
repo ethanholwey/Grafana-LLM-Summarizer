@@ -62,6 +62,8 @@ The count endpoint hosts key value pairs for defined keywords that are important
 Good: 2,
 Failed: 0
 Critical: 34
+### Endpoint 4 - /files
+The files endpoint just lists the available files in the directory. This endpoint is unused, due to the token limitations on larger log files. 
 
 
 
