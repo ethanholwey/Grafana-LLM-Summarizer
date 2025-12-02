@@ -26,6 +26,9 @@ def get_log_file_path(filename=None):
 
 @app.get("/")
 def root():
+    """This is the endpoint that triggers the summary of the log file from the LLM. Once this endpoint is accessed,
+    the LLM will start reading the file and generate a summary. This summary is displayed in JSON format."""
+    
     # Load environment variables from .env
     load_dotenv()
 
@@ -86,7 +89,8 @@ def root():
 
 @app.get("/count")
 def keyword_count(filename=None):
-    # Support selecting different log files (useful for Docker volume mounting)
+    """The count endpoint hosts key value pairs for defined keywords that are important in logs.
+    The purpose of this endpoint is to read the file and count how many times a keyword appears in the log."""
     path = get_log_file_path(filename)
 
     with open(path, "r", encoding="utf-8") as f:
@@ -105,7 +109,7 @@ def keyword_count(filename=None):
 
 @app.get("/file")
 def read_file(filename=None):
-    # Support selecting different log files (useful for Docker volume mounting)
+    """The file endpoint hosts the entire file that the LLM is using to summarize. The file's content is displayed in JSON format on the webpage"""
     path = get_log_file_path(filename)
 
     with open(path, "r", encoding="utf-8") as f:
@@ -115,7 +119,7 @@ def read_file(filename=None):
 
 @app.get("/files")
 def list_files():
-    """List available log files in LOG_DIR (useful when mounting log directories)"""
+    """List available log files in LOG_DIR"""
     if not os.path.isdir(LOG_DIR):
         raise HTTPException(status_code=404, detail=f"Log directory not found: {LOG_DIR}")
     return sorted(os.listdir(LOG_DIR))
